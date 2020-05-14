@@ -71,6 +71,20 @@ services:
     depends_on:
       - elasticsearch
 
+  axeman:
+    build:
+      context: Axeman/
+      args:
+        PYTHON_VERSION: $AXEMAN_PYTHON_VERSION
+    volumes:
+      - type: bind
+        source: ./data
+        target: $AXEMAN_OUTPUT_DIR
+    environment:
+      OUTPUT_DIR: $AXEMAN_OUTPUT_DIR
+    networks:
+      - elk
+
 networks:
   elk:
     driver: bridge
