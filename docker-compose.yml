@@ -41,14 +41,14 @@ services:
         target: /usr/share/logstash/pipeline
         read_only: true
       - type: bind
-        source: ../data
+        source: ./data
         target: /usr/share/logstash/data
     ports:
       - "127.0.0.1:5000:5000/tcp"
       - "127.0.0.1:5000:5000/udp"
       - "127.0.0.1:9600:9600"
     environment:
-      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+      LS_JAVA_OPTS: "-Xmx512m -Xms512m"
     networks:
       - elk
     depends_on:
