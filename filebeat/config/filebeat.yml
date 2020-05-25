@@ -1,0 +1,26 @@
+#filebeat.config:
+#  modules:
+#    path: ${path.config}/modules.d/*.yml
+#    reload.enabled: false
+
+filebeat.inputs:
+- type: log
+  enabled: true
+  paths:
+    - /usr/share/filebeat/data/certificates/*/*.csv
+  encoding: utf-8
+  recursive_glob.enabled: true
+  tail_files: false
+  close_eof: true
+
+output.logstash:
+  # Boolean flag to enable or disable the output module.
+  enabled: true
+
+  # The Logstash hosts
+  hosts: ["logstash:5000"]
+
+  # Enable SSL support. SSL is automatically enabled if any SSL setting is set.
+  ssl.enabled: false
+
+logging.level: info

@@ -18,7 +18,7 @@ services:
       - "127.0.0.1:9200:9200"
       - "127.0.0.1:9300:9300"
     environment:
-      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+      ES_JAVA_OPTS: "-Xmx2048m -Xms256m"
       ELASTIC_PASSWORD: changeme
       # Use single node discovery in order to disable production mode and avoid bootstrap checks
       # see https://www.elastic.co/guide/en/elasticsearch/reference/current/bootstrap-checks.html
@@ -40,9 +40,6 @@ services:
         source: ./logstash/pipeline
         target: /usr/share/logstash/pipeline
         read_only: true
-      - type: bind
-        source: ./data
-        target: /usr/share/logstash/data
     ports:
       - "127.0.0.1:5000:5000/tcp"
       - "127.0.0.1:5000:5000/udp"
@@ -70,6 +67,27 @@ services:
       - elk
     depends_on:
       - elasticsearch
+
+  filebeat:
+    build:
+      context: filebeat/
+      args:
+        ELK_VERSION: $ELK_VERSION
+    command: -e --strict.perms=false
+    volumes:
+      - type: bind
+        source: ./filebeat/config/filebeat.yml
+        target: /usr/share/filebeat/filebeat.yml
+        read_only: true
+      - type: bind
+        source: ./data
+        target: /usr/share/filebeat/data
+    ports:
+      - "127.0.0.1:9000:9000"
+    networks:
+      - elk
+    depends_on:
+      - logstash
 
   axeman:
     build:
