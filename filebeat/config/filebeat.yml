@@ -10,8 +10,6 @@ filebeat.inputs:
     - /usr/share/filebeat/data/certificates/*/*.csv
   encoding: utf-8
   recursive_glob.enabled: true
-  tail_files: false
-  close_eof: true
 
 output.logstash:
   # Boolean flag to enable or disable the output module.
