@@ -1,0 +1,44 @@
+{
+  "mappings": {
+    "properties": {
+      "@timestamp": {
+        "type": "date"
+      },
+      "@version": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+          }
+        }
+      },
+      "not_before": {
+        "type": "date"
+      },
+      "not_after": {
+        "type": "date"
+      },
+      "all_domains": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "chain_hash": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "cert_der": {
+        "type": "text",
+        "index": false
+      }
+    }
+  }
+}
